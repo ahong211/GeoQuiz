@@ -11,6 +11,7 @@ import android.widget.Toast;
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = QuizActivity.class.getSimpleName() + "_TAG";
+    private static final String KEY_INDEX = "index";
 
     private Button mTrueButton;
     private Button mFalseButton;
@@ -64,6 +65,10 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
+
         updateQuestion();
     }
 
@@ -113,5 +118,12 @@ public class QuizActivity extends AppCompatActivity {
             messageResId = R.string.incorrect_toast;
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSaveInstanceState");
+        outState.putInt(KEY_INDEX, mCurrentIndex);
     }
 }
